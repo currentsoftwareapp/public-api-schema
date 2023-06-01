@@ -1,0 +1,222 @@
+openapi: 3.0.0
+info:
+  title: Utility Billing SaaS API
+  description: API for managing utility billing system
+  version: 1.0.0
+servers:
+  - url: https://api.aeneassoftware.com/v1
+paths:
+  /accounts:
+    get:
+      summary: Get list of accounts
+      tags:
+        - accounts
+      operationId: getaccounts
+      responses:
+        '200':
+          description: List of accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/account'
+    post:
+      summary: Create a new account
+      tags:
+        - accounts
+      operationId: createaccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+        required: true
+      responses:
+        '201':
+          description: Created account data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+  /accounts/{accountId}:
+    get:
+      summary: Get a specific account
+      tags:
+        - accounts      
+      operationId: getaccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: account data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+    put:
+      summary: Update a specific account
+      tags:
+        - accounts      
+      operationId: updateaccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/account'
+        required: true
+      responses:
+        '200':
+          description: Updated account data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/account'
+    delete:
+      summary: Delete a specific account
+      tags:
+        - accounts
+      operationId: deleteaccount
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: account deleted
+  /serviceOrders:
+    get:
+      summary: Get list of service orders
+      tags:
+        - service orders
+      operationId: getServiceOrders
+      responses:
+        '200':
+          description: List of service orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceOrder'
+    post:
+      summary: Create a new service order
+      tags:
+        - service orders
+      operationId: createServiceOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceOrder'
+        required: true
+      responses:
+        '201':
+          description: Created service order data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+  /serviceOrders/{serviceOrderId}:
+    get:
+      summary: Get a specific service order
+      tags:
+        - service orders
+      operationId: getServiceOrder
+      parameters:
+        - name: serviceOrderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Service order data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+    put:
+      summary: Update a specific service order
+      tags:
+        - service orders
+      operationId: updateServiceOrder
+      parameters:
+        - name: serviceOrderId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceOrder'
+        required: true
+      responses:
+        '200':
+          description: Updated service order data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+    delete:
+      summary: Delete a specific service order
+      tags:
+        - service orders
+      operationId: deleteServiceOrder
+      parameters:
+        - name: serviceOrderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Service order deleted
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        address:
+          type: string
+        contactNumber:
+          type: string
+        email:
+          type: string
+    ServiceOrder:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        accountIds:
+          type: array
+          items:  
+            type: string
+        serviceType:
+          type: string
+        serviceStartDate:
+          type: string
+          format: date-time
+        serviceEndDate:
+          type: string
+          format: date-time
