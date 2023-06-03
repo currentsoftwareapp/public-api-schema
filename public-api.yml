@@ -237,9 +237,11 @@ components:
         installationDate:
           type: string
           format: date-time
-        lastReadDate:
+        lastReadTime:
           type: string
           format: date-time
+        lastReadValue:
+          type: int
     ServiceOrder:
       type: object
       properties:
