@@ -196,12 +196,50 @@ components:
           readOnly: true
         name:
           type: string
-        address:
-          type: string
+        mailingAddress:
+          type: address
         contactNumber:
           type: string
         email:
           type: string
+        balance:
+          type: float
+        status:
+          type: float
+        rate:
+          type: string
+    ServiceLocation:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        active_customer_id:
+          type: string
+        meter_id:
+          type: string
+        address: 
+          type: address
+        route:
+          type: string
+        coordinates:
+          type: string
+    Meter:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        meterType:
+          type: string
+        coordinates:
+          type: string
+        installationDate:
+          type: string
+          format: date-time
+        lastReadDate:
+          type: string
+          format: date-time
     ServiceOrder:
       type: object
       properties:
@@ -220,3 +258,5 @@ components:
         serviceEndDate:
           type: string
           format: date-time
+        status:
+          type: string
