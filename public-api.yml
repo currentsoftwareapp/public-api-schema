@@ -207,9 +207,9 @@ components:
         email:
           type: string
         balance:
-          type: float
+          type: number
         status:
-          type: float
+          type: number
         rate:
           type: string
     ServiceLocation:
