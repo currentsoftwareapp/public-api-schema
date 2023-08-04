@@ -4,7 +4,7 @@ info:
   description: API for managing utility billing
   version: 1.0.0
 servers:
-  - url: https://api.aeneassoftware.com/v1
+  - url: https://api.currentsoftware.app/v1
 paths:
   /accounts:
     get:
@@ -198,20 +198,57 @@ components:
           type: string
         type: 
           type: string
-        mailing_address: 
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        contactNumber:
-          type: string
-        email:
-          type: string
+        primaryContact:
+          $ref: '#/components/schemas/ContactPerson'
+        otherContacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
         balance:
+          type: number
+        pastDueBalance:
           type: number
         status:
           type: string
-        rate:
+        rateCode:
           type: string
+    ContactPerson:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        accountId:
+          type: string
+        person_id:
+          type: string
+        type:
+          type: string
+        status:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        mailing_address: 
+          $ref: '#/components/schemas/Address'
+    Person:     
+      type: object
+      properties:
+        id: 
+          type: string
+          readOnly: true
+        firstName: 
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
     ServiceLocation:
       type: object
       properties:
@@ -229,7 +266,7 @@ components:
         route:
           type: string
         sequence:
-          type: int
+          type: integer
         coordinates:
           type: string
     Meter:
@@ -248,7 +285,7 @@ components:
           type: string
           format: date-time
         age:
-          type: int
+          type: integer
         warrantyEndDate:
           type: string
           format: date-time
@@ -256,7 +293,7 @@ components:
           type: string
           format: date-time
         lastReadValue:
-          type: int
+          type: integer
     ServiceOrder:
       type: object
       properties:
@@ -285,11 +322,11 @@ components:
         status:
           type: string
         assignee:
-          type: string
+          $ref: '#/components/schemas/User'
         meterId:
           type: string
         meter:
-          type: '#/components/schemas/Meter'
+          $ref: '#/components/schemas/Meter'
         lastRead:
           $ref: '#/components/schemas/MeterRead'
         meterRead:
@@ -302,7 +339,6 @@ components:
             type: string
         serviceNotes:
           type: string
-
     MeterRead:
       type: object
       properties:
@@ -315,7 +351,7 @@ components:
           type: string
           format: date-time
         read:
-          type: int
+          type: integer
     Address:
       type: object
       properties:
@@ -331,5 +367,20 @@ components:
           type: string
         country:
           type: string         
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          readOnly: true
+        firstName:
+          type: string
+        lastName:
+          type: string
+        departmentId:
+          type: string
+        email: 
+          type: string
+
         
           
