@@ -221,11 +221,15 @@ components:
         active_customer_id:
           type: string
         meter_id:
-          type: string
+          type: array
+          items:  
+            type: string
         address: 
           $ref: '#/components/schemas/Address'
         route:
           type: string
+        sequence:
+          type: int
         coordinates:
           type: string
     Meter:
@@ -234,11 +238,18 @@ components:
         id:
           type: string
           readOnly: true
+        endpointId:
+          type: string
         meterType:
           type: string
         coordinates:
           type: string
         installationDate:
+          type: string
+          format: date-time
+        age:
+          type: int
+        warrantyEndDate:
           type: string
           format: date-time
         lastReadTime:
@@ -258,14 +269,53 @@ components:
             type: string
         serviceType:
           type: string
+        serviceSubType:
+          type: string
+        serviceRequestedDate:
+          type: string
+          format: date-time
         serviceStartDate:
           type: string
           format: date-time
         serviceEndDate:
           type: string
           format: date-time
+        description:
+          type: string
         status:
           type: string
+        assignee:
+          type: string
+        meterId:
+          type: string
+        meter:
+          type: '#/components/schemas/Meter'
+        lastRead:
+          $ref: '#/components/schemas/MeterRead'
+        meterRead:
+          $ref: '#/components/schemas/MeterRead'
+        averageUsage:
+          type: number
+        partsUsed:
+          type: array
+          items:
+            type: string
+        serviceNotes:
+          type: string
+
+    MeterRead:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        meterId:
+          type: string
+        readDate:
+          type: string
+          format: date-time
+        read:
+          type: int
     Address:
       type: object
       properties:
