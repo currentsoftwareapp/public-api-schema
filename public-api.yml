@@ -4,7 +4,7 @@ info:
   description: API for managing utility billing
   version: 1.0.0
 servers:
-  - url: https://api.aeneassoftware.com/v1
+  - url: https://api.currentsoftware.app/v1
 paths:
   /accounts:
     get:
@@ -198,20 +198,57 @@ components:
           type: string
         type: 
           type: string
-        mailing_address: 
-          $ref: '#/components/schemas/Address'
-        billing_address:
-          $ref: '#/components/schemas/Address'
-        contactNumber:
+        primaryContact:
+          $ref: '#/components/schemas/ContactPerson'
+        otherContacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactPerson'
+        balance:
+          type: number
+        pastDueBalance:
+          type: number
+        status:
+          type: string
+        rateCode:
+          type: string
+    ContactPerson:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        accountId:
+          type: string
+        person_id:
+          type: string
+        type:
+          type: string
+        status:
           type: string
         email:
           type: string
-        balance:
-          type: number
-        status:
-          type: number
-        rate:
+        phone:
           type: string
+        mailing_address: 
+          $ref: '#/components/schemas/Address'
+    Person:     
+      type: object
+      properties:
+        id: 
+          type: string
+          readOnly: true
+        firstName: 
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date-time
     ServiceLocation:
       type: object
       properties:
@@ -221,11 +258,15 @@ components:
         active_customer_id:
           type: string
         meter_id:
-          type: string
+          type: array
+          items:  
+            type: string
         address: 
           $ref: '#/components/schemas/Address'
         route:
           type: string
+        sequence:
+          type: integer
         coordinates:
           type: string
     Meter:
@@ -234,6 +275,8 @@ components:
         id:
           type: string
           readOnly: true
+        endpointId:
+          type: string
         meterType:
           type: string
         coordinates:
@@ -241,11 +284,16 @@ components:
         installationDate:
           type: string
           format: date-time
+        age:
+          type: integer
+        warrantyEndDate:
+          type: string
+          format: date-time
         lastReadTime:
           type: string
           format: date-time
         lastReadValue:
-          type: int
+          type: integer
     ServiceOrder:
       type: object
       properties:
@@ -258,14 +306,52 @@ components:
             type: string
         serviceType:
           type: string
+        serviceSubType:
+          type: string
+        serviceRequestedDate:
+          type: string
+          format: date-time
         serviceStartDate:
           type: string
           format: date-time
         serviceEndDate:
           type: string
           format: date-time
+        description:
+          type: string
         status:
           type: string
+        assignee:
+          $ref: '#/components/schemas/User'
+        meterId:
+          type: string
+        meter:
+          $ref: '#/components/schemas/Meter'
+        lastRead:
+          $ref: '#/components/schemas/MeterRead'
+        meterRead:
+          $ref: '#/components/schemas/MeterRead'
+        averageUsage:
+          type: number
+        partsUsed:
+          type: array
+          items:
+            type: string
+        serviceNotes:
+          type: string
+    MeterRead:
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        meterId:
+          type: string
+        readDate:
+          type: string
+          format: date-time
+        read:
+          type: integer
     Address:
       type: object
       properties:
@@ -281,5 +367,20 @@ components:
           type: string
         country:
           type: string         
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          readOnly: true
+        firstName:
+          type: string
+        lastName:
+          type: string
+        departmentId:
+          type: string
+        email: 
+          type: string
+
         
           
